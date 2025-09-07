@@ -3,10 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Teste</title>
 </head>
 <body>
-    <h1>Testando</h1>
+    <div class="container">
+        <div class="divformPenguin">
+            <form class="formPinguin" method="POST">
+            <h1>Formulário para ajuda aos Pinguins da Antártida</h1>
+            <label for="nome">Nome:</label>
+            <br>
+            <input type="text" id="nome" name="nome" required>
+            <br>
+            <label for="email">Email:</label>
+            <br>
+            <input type="email" id="email" name="email" required>
+            <br>
+            <label for="mensagem">Mensagem:</label>
+            <br>
+            <textarea id="mensagem" name="mensagem" rows="4" required></textarea>
+            <br>
+            <button type="submit">Enviar</button>
+            </form>
+        </div>
+        <div class="divPinguin">
+            <img id="imgPinguin" src="https://labetno.ufpa.br/images/galeria_em_artigos/image03_grd.png" alt="Pinguins">
+        </div>
+    </div>
+
 </body>
 </html>

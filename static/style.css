@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+}
+
+.divPinguin {
+    flex: 1;
+    border: solid black 2px;
+    align-items: stretch;
+    text-align: center;
+}
+
+.divformPenguin {
+    flex: 1;
+    border: solid black 2px;
+    align-items: stretch;
+}
+
+.formPinguin{
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+#imgPinguin {
+    border-radius: 100px;
+}
