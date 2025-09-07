@@ -2,7 +2,6 @@ from flask import Flask
 from flask import request
 from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
-import os
 
 app = Flask(__name__)
 #configurando o banco de dados
@@ -27,9 +26,7 @@ class Pessoa(db.Model):
 def hello_world():
 	return "Hello World"
 
-json_caminho = "dados/pessoas.json"
-
-@app.route("/", methods=["GET","POST"])
+@app.route("/cadastro", methods=["GET","POST"])
 def form():
     #Abaixo verifica se o metodo é POST para pegar os dados do formulario
     if request.method == "POST":
@@ -44,7 +41,7 @@ def form():
 
         return f"Usuario {nome} registrado con exito"
 
-    return render_template("index.html")
+    return render_template("cadastro.html")
 
 
 if __name__ == "__main__":
