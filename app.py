@@ -1,10 +1,27 @@
 from flask import Flask
 from flask import request
 from flask import render_template
-import json
-import uuid
+from flask_sqlalchemy import SQLAlchemy
+import os
 
 app = Flask(__name__)
+#configurando o banco de dados
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///penguin.db'
+
+#inicializando o banco de dados
+db = SQLAlchemy(app)
+
+#criando o banco de dados
+with app.app_context():
+    db.create_all()
+
+#criando a tabela Pessoa
+class Pessoa(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    mensagem = db.Column(db.Text, nullable=True)
+
 
 @app.route("/hello")
 def hello_world():
@@ -20,24 +37,10 @@ def form():
         email = request.form.get("email")
         mensagem = request.form.get("mensagem")
 
-        #Abaixo abre o arquivo json e carrega os dados ja existentes
-        try:
-            with open(json_caminho, "r") as arquivo:
-                pessoas_cadastradas = json.load(arquivo)
-        except (FileNotFoundError, json.JSONDecodeError):
-            pessoas_cadastradas = {}
-
-        #Abaixo gera um ID unico para cada usuario
-        id = str(uuid.uuid4())
-        pessoas_cadastradas[id] = {
-            "nome": nome,
-            "email": email,
-            "mensagem": mensagem
-        }
-
-        #Abaixo abre o arquivo json e salva os novos dados
-        with open(json_caminho, "w") as arquivo:
-             json.dump(pessoas_cadastradas, arquivo, indent=4)
+        #Salvando os dados no banco de dados
+        pessoa = Pessoa(nome = nome, email = email, mensagem = mensagem)
+        db.session.add(pessoa)
+        db.session.commit()
 
         return f"Usuario {nome} registrado con exito"
 
